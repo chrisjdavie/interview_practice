@@ -5,6 +5,16 @@ from run import initialise_graph, bfs
 
 class TestExamples(TestCase):
 
+    def test_raises(self):
+
+        N = 201
+        edges = [(0, i+1) for i in range(N)]
+
+        graph = initialise_graph(edges)
+
+        with self.assertRaises(ValueError):
+            bfs(graph, N)
+
     def test_example_1(self):
 
         num_nodes = 5
@@ -22,15 +32,6 @@ class TestExamples(TestCase):
         graph = initialise_graph(edges)
 
         self.assertEqual(bfs(graph, num_nodes), [0, 1, 2])
-
-    def test_more_nodes_than_edges(self):
-
-        num_nodes = 6
-        edges = [(0, 1)]
-
-        graph = initialise_graph(edges)
-
-        self.assertEqual(bfs(graph, num_nodes), [0, 1])
 
     def test_circular(self):
         # it's a graph not a tree!
@@ -51,3 +52,13 @@ class TestExamples(TestCase):
         graph = initialise_graph(edges)
 
         self.assertEqual(bfs(graph, num_nodes), [0, 1, 2])
+
+    def test_double_link(self):
+        # it's a graph not a tree!
+
+        num_nodes = 2
+        edges = [(0, 1), (0, 2), (1, 3), (2, 3)]
+
+        graph = initialise_graph(edges)
+
+        self.assertEqual(bfs(graph, num_nodes), [0, 1, 2, 3])

@@ -16,33 +16,20 @@ def initialise_graph(edges: List[Tuple[int]]) -> Dict[int, List[int]]:
     return graph
 
 
-class Count:
-
-    def __init__(self):
-
-        self._count = 0
-
-    def inc(self):
-
-        self._count += 1
-
-    def __gt__(self, other: int):
-        return self._count > other
-
-
 def dfs(graph: Dict[int, List[int]], number_of_nodes: int) -> List[int]:
 
     results = []
     discovered = set()
-    count = Count()
+    count = 0
 
     def _dfs(node: int):
+        nonlocal count
 
         if node in discovered:
             return
         discovered.add(node)
 
-        count.inc()
+        count += 1
         if count > MAX_NODES:
             raise ValueError(f"Exceeded node limit {MAX_NODES=}")
 
