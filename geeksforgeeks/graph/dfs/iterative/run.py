@@ -1,4 +1,4 @@
-from collections import defaultdict, deque
+from collections import defaultdict
 
 from typing import Dict, List, Tuple
 
@@ -16,14 +16,14 @@ def initialise_graph(edges: List[Tuple[int]]) -> Dict[int, List[int]]:
 def dfs(graph: Dict[int, List[int]], number_of_nodes: int) -> List[int]:
 
     results = []
-    stack = deque()
+    stack = []
     limit = 200
     discovered = set()
 
     stack.append(0)
 
     for _ in range(limit):
-        node = stack.popleft()
+        node = stack.pop()
         if node not in discovered:
 
             discovered.add(node)
@@ -31,7 +31,7 @@ def dfs(graph: Dict[int, List[int]], number_of_nodes: int) -> List[int]:
 
             for child_node in graph[node][::-1]:
                 if child_node not in discovered:
-                    stack.appendleft(child_node)
+                    stack.append(child_node)
 
         if not stack:
             break
