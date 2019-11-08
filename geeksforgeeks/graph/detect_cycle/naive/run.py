@@ -17,11 +17,11 @@ def initialise_graph(edges: List[Tuple[int]]) -> DefaultDict[int, List[int]]:
     return graph
 
 
-def detect_cycle(graph: DefaultDict[int, List[int]]) -> bool:
+def is_cyclic(graph: DefaultDict[int, List[int]]) -> bool:
 
     node_count = 0
 
-    def _detect_cycle(node: int, recursion_stack: Set[int]):
+    def _is_cyclic(node: int, recursion_stack: Set[int]):
         nonlocal node_count
         node_count += 1
 
@@ -33,7 +33,7 @@ def detect_cycle(graph: DefaultDict[int, List[int]]) -> bool:
         for child_node in graph[node]:
             if child_node in recursion_stack:
                 return True
-            if _detect_cycle(child_node, copy(recursion_stack)):
+            if _is_cyclic(child_node, copy(recursion_stack)):
                 return True
 
         return False
@@ -42,7 +42,7 @@ def detect_cycle(graph: DefaultDict[int, List[int]]) -> bool:
 
     while remaining:
         recursion_stack = set()
-        if _detect_cycle(remaining.pop(), recursion_stack):
+        if _is_cyclic(remaining.pop(), recursion_stack):
             return True
         remaining.difference_update(recursion_stack)
 

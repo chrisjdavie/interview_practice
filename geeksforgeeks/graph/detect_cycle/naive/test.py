@@ -1,9 +1,9 @@
 from unittest import TestCase
 
-from run import detect_cycle, initialise_graph
+from run import is_cyclic, initialise_graph
 
 
-class TestDetectCycle(TestCase):
+class TestIsCyclic(TestCase):
 
     def test_raises_on_limit(self):
 
@@ -12,7 +12,7 @@ class TestDetectCycle(TestCase):
         graph = initialise_graph(edges)
 
         with self.assertRaises(ValueError):
-            detect_cycle(graph)
+            is_cyclic(graph)
 
     def test_self_loop(self):
 
@@ -20,7 +20,7 @@ class TestDetectCycle(TestCase):
 
         graph = initialise_graph(edges)
 
-        self.assertEqual(detect_cycle(graph), True)
+        self.assertEqual(is_cyclic(graph), True)
 
     def test_no_loop(self):
 
@@ -28,7 +28,7 @@ class TestDetectCycle(TestCase):
 
         graph = initialise_graph(edges)
 
-        self.assertEqual(detect_cycle(graph), False)
+        self.assertEqual(is_cyclic(graph), False)
 
     def test_loop_two(self):
 
@@ -36,7 +36,7 @@ class TestDetectCycle(TestCase):
 
         graph = initialise_graph(edges)
 
-        self.assertEqual(detect_cycle(graph), True)
+        self.assertEqual(is_cyclic(graph), True)
 
     def test_loop_rh_branch(self):
 
@@ -44,7 +44,7 @@ class TestDetectCycle(TestCase):
 
         graph = initialise_graph(edges)
 
-        self.assertEqual(detect_cycle(graph), True)
+        self.assertEqual(is_cyclic(graph), True)
 
     def test_split(self):
 
@@ -52,7 +52,7 @@ class TestDetectCycle(TestCase):
 
         graph = initialise_graph(edges)
 
-        self.assertEqual(detect_cycle(graph), False)
+        self.assertEqual(is_cyclic(graph), False)
 
     def test_loop_non_zero_index(self):
 
@@ -60,7 +60,7 @@ class TestDetectCycle(TestCase):
 
         graph = initialise_graph(edges)
 
-        self.assertEqual(detect_cycle(graph), True)
+        self.assertEqual(is_cyclic(graph), True)
 
     def test_loop_two_graphs(self):
 
@@ -68,7 +68,7 @@ class TestDetectCycle(TestCase):
 
         graph = initialise_graph(edges)
 
-        self.assertEqual(detect_cycle(graph), True)
+        self.assertEqual(is_cyclic(graph), True)
 
     def test_failing_example(self):
 
@@ -76,4 +76,4 @@ class TestDetectCycle(TestCase):
 
         graph = initialise_graph(edges)
 
-        self.assertEqual(detect_cycle(graph), False)
+        self.assertEqual(is_cyclic(graph), False)
