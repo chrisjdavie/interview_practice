@@ -20,3 +20,15 @@ This does mean my code will be linted by eye, so it likely won't be as good
 These I found hard
 - geeksforgeeks/graph/bfs
 - geeksforgeeks/graph/detect_cycle/naive
+
+## hackerrank/data_structures/trie/contacts.py
+
+I did a full implementation of a trie, but really the question didn't need the the prefix completion, just to know the number of nodes in the subtree, which was easy to store at insert time.
+
+It also wasn't fast enough with the initial recursive solution I tried, but an (arguably simpler) iterative solution with the add was fast enough.
+
+## hackerrank/sql/*
+
+New concepts
+- multiple ORDER BY
+- LEFT, RIGHT, SUBSTRING, REGEXP
