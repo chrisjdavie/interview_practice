@@ -33,3 +33,5 @@ New concepts
 - multiple ORDER BY
 - LEFT, RIGHT, SUBSTRING, REGEXP
 - IF, CASE WHEN
+- EXISTS
+- COUNT (without GROUP BY)
