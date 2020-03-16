@@ -32,3 +32,4 @@ It also wasn't fast enough with the initial recursive solution I tried, but an (
 New concepts
 - multiple ORDER BY
 - LEFT, RIGHT, SUBSTRING, REGEXP
+- IF, CASE WHEN
