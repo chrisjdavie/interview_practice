@@ -5,7 +5,7 @@ Given a 2D grid consists of 0s (land) and 1s (water).  An island is a maximal 4-
 
 Return the number of closed islands.
 
-The not-too Pythonic "class Solution" is a hackerrank thing
+The not-too Pythonic "class Solution" is a leetcode thing
 """
 from typing import List, Optional
 from unittest import TestCase
