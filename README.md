@@ -20,6 +20,7 @@ This does mean my code will be linted by eye, so it likely won't be as good
 These I found hard
 - geeksforgeeks/graph/bfs
 - geeksforgeeks/graph/detect_cycle/naive
+- leetcode/0079-word-search - my solution was far, far too verbose (logic was fine)
 
 ## hackerrank/data_structures/trie/contacts.py
 
