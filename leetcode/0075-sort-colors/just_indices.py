@@ -3,6 +3,9 @@ Normally, iterating using indicies rather that iterating on the objects
 is less clear. But in the original solution (single_pass), there are
 two indicies and one iterating over the list. This is inconsistent
 and, to my eyes, less clear than this approach.
+
+This method explicitally shows the "swapping" of items, and the
+progression of the indicies, making it clearer what is going on
 """
 from collections import Counter
 from typing import List
