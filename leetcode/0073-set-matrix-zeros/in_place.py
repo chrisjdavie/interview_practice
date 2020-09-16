@@ -1,36 +1,17 @@
 from itertools import product, zip_longest
 from pprint import pprint
-from typing import Generator, List, Tuple
+from typing import Generator, List, Tuple, Optional
 from unittest import TestCase
 
 from parameterized import parameterized
 
 
-def indicies_spiral(len_m, len_n) -> Generator[Tuple[int, int], None, None]:
-
-    top_inds = iter(range(len_m + 1))
-
-    ind_prev = next(top_inds)
-
-    print(ind_prev, len_m + 1)
-
-    yield(ind_prev, ind_prev)
-
-    ind_prev = next(top_inds)
-
-    for m in range(ind_prev):
-        yield(m, ind_prev)
-
-    # for n in range(ind_prev - 1):
-    #     yield(ind_prev, n)
-
-
 class Solution:
 
-    PLACEHOLDER = -1
+    PLACEHOLDER = None
 
     @staticmethod
-    def _set_col_row_placeholder(zero_row: int, zero_col: int, matrix: List[List[int]]) -> None:
+    def _set_col_row_placeholder(zero_row: int, zero_col: int, matrix: List[List[Optional[int]]]) -> None:
         for i, _ in enumerate(matrix[0]):
             if matrix[zero_row][i] != 0:
                 matrix[zero_row][i] = Solution.PLACEHOLDER
@@ -39,13 +20,13 @@ class Solution:
                 matrix[j][zero_col] = Solution.PLACEHOLDER
 
     @staticmethod
-    def _placeholder_to_zero(matrix: List[List[int]]) -> None:
+    def _placeholder_to_zero(matrix: List[Optional[int]]) -> None:
         for i, row in enumerate(matrix):
             for j, _ in enumerate(row):
                 if matrix[i][j] == Solution.PLACEHOLDER:
                     matrix[i][j] = 0
 
-    def setZeroes(self, matrix: List[List[int]]) -> None:
+    def setZeroes(self, matrix: List[Optional[int]]) -> None:
         """
         Do not return anything, modify matrix in-place instead.
         """
@@ -101,7 +82,11 @@ class TestSetZeroes(TestCase):
             [[0, 0, 0, 0],
              [0, 4, 5, 0],
              [0, 3, 1, 0]]
-        )
+        ),
+        (
+            [[-1], [2], [3]],
+            [[-1], [2], [3]]
+        )  # Regression, -1 as an input
     ])
     def test_examples(self, matrix, expected_matrix):
 
