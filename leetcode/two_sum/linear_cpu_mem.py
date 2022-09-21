@@ -7,7 +7,7 @@ You may assume that each input would have exactly one solution, and you may not 
 
 You can return the answer in any order.
 """
-from typing import List
+from typing import Dict, List
 from unittest import TestCase
 
 from parameterized import parameterized
@@ -17,10 +17,14 @@ class Solution:
 
     def twoSum(self, nums: List[int], target: int) -> List[int]:
 
-        for i, num_i in enumerate(nums):
-            for j, num_j in enumerate(nums[i+1:]):
-                if num_i + num_j == target:
-                    return [i, i + j + 1]
+        num_index: Dict[int, int] = dict()
+
+        for index, num in enumerate(nums):
+            difference: int = target - num
+            if difference in num_index:
+                return [num_index[difference], index]
+            num_index[num] = index
+
         return []
 
 
@@ -37,3 +41,4 @@ class TestSolution(TestCase):
         actual_output = Solution().twoSum(nums, target)
 
         self.assertListEqual(expected_output, actual_output)
+
