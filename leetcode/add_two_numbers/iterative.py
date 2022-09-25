@@ -85,6 +85,8 @@ class TestSolution(TestCase):
         l1_0 = self.linked_list_from_list(l1)
         l2_0 = self.linked_list_from_list(l2)
 
-        actual = Solution().addTwoNumbers(l1_0, l2_0)
+        expected_0 = self.linked_list_from_list(expected)
+        actual_0 = Solution().addTwoNumbers(l1_0, l2_0)
 
-        self.assertListEqual(expected, actual)
+        while expected_0 or actual_0:
+            self.assertEqual(expected_0.val, actual_0.val)
