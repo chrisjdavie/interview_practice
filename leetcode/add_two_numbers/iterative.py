@@ -24,35 +24,49 @@ class Solution:
 
         l1_current = l1
         l2_current = l2
-        result = []
+        first = ListNode()
+        current = ListNode()
+        current.next = first
         carry = 0
 
         while l1_current and l2_current:
+            current = current.next
+
             sum = l1_current.val + l2_current.val + carry
-            current = sum%10
+            current.val = sum%10
             carry = sum//10
-            result.append(current)
+
             l1_current = l1_current.next
             l2_current = l2_current.next
+            current.next = ListNode()
 
         while l1_current:
+            current = current.next
+
             sum = l1_current.val + carry
-            current = sum%10
+            current.val = sum%10
             carry = sum//10
-            result.append(current)
+
             l1_current = l1_current.next
+            current.next = ListNode()
+
 
         while l2_current:
+            current = current.next
+
             sum = l2_current.val + carry
-            current = sum%10
+            current.val = sum%10
             carry = sum//10
-            result.append(current)
+
             l2_current = l2_current.next
+            current.next = ListNode()
 
         if carry:
-            result.append(carry)
+            current.next.val = carry
+        else:
+            current.next = None
 
-        return result
+        return first
 
 
 class TestSolution(TestCase):
@@ -90,3 +104,5 @@ class TestSolution(TestCase):
 
         while expected_0 or actual_0:
             self.assertEqual(expected_0.val, actual_0.val)
+            expected_0 = expected_0.next
+            actual_0 = actual_0.next
