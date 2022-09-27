@@ -20,9 +20,30 @@ class ListNode:
 
 class Solution:
 
-    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode], carry: int = 0) -> Optional[ListNode]:
 
-        return ListNode()
+        if l1 is None and l2 is None:
+            if carry:
+                return ListNode(carry)
+            return None
+
+        if l2 is None:
+            value = l1.val + carry
+            this_node = ListNode(value%10)
+            this_node.next = self.addTwoNumbers(l1.next, None, value//10)
+            return this_node
+
+        if l1 is None:
+            value = l2.val + carry
+            this_node = ListNode(value%10)
+            this_node.next = self.addTwoNumbers(l2.next, None, value//10)
+            return this_node
+
+        value = l1.val + l2.val + carry
+        this_node = ListNode(value%10)
+        this_node.next = self.addTwoNumbers(l1.next, l2.next, value//10)
+
+        return this_node
 
 
 class TestSolution(TestCase):
