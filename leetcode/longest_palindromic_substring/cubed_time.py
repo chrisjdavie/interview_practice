@@ -12,15 +12,29 @@ from parameterized import parameterized
 
 class Solution():
 
-    def _isAPalindrome(self, i: int, j: int) -> bool:
-        return False
+    @staticmethod
+    def _isAPalindrome(i: int, j: int, s: str) -> bool:
+        
+        for i_l, i_r in zip(range(i, j+1), range(j, i-1, -1)):
+            if s[i_l] != s[i_r]:
+                return False
+        return True
 
     def longestPalindrome(self, s: str) -> str:
 
-        self._s: str = s
+        i_longest_palindrome = 0
+        j_longest_palindrome = 0
+        len_longest_palindrome = 1
 
-        return "~"
+        for i in range(len(s)):
+            for j in range(i, len(s)):
+                len_substring = j - i + 1
+                if len_substring > len_longest_palindrome and self._isAPalindrome(i, j, s):
+                    i_longest_palindrome = i
+                    j_longest_palindrome = j
+                    len_longest_palindrome = len_substring
 
+        return s[i_longest_palindrome: j_longest_palindrome+1]
 
 class TestSolution(TestCase):
 
@@ -32,18 +46,18 @@ class TestSolution(TestCase):
     def testIsAPalindrome(self, i, j, expected_output):
 
         solution = Solution()
-        solution._s = "aba"
 
         self.assertEqual(
-            Solution()._isAPalindrome(i, j),
+            solution._isAPalindrome(i, j, "aba"),
             expected_output
         )
 
     @parameterized.expand([
+        ("", ""),
         ("babad", "bab"),
         ("cbbd", "bb")
     ])
-    def test(self, input, expected_output):
+    def testLongestPalindrome(self, input, expected_output):
 
         self.assertEqual(
             Solution().longestPalindrome(input),
