@@ -1,3 +1,4 @@
+from collections import defaultdict
 from itertools import count, zip_longest
 from typing import Iterator 
 from unittest import TestCase
@@ -10,51 +11,44 @@ class Solution:
     @staticmethod
     def inputCoords(numRows: int, lenS: int) -> Iterator[tuple[int, int]]:
 
-        def cols_iterator(numRows: int) -> Iterator[tuple[int, int]]:
+        def cols_iterator(numRows: int) -> Iterator[int]:
             columns: Iterator[int] = count()
-            while True:            
-                this_column: int = next(columns)
+            while True:
                 for i in range(numRows):
-                    yield (i, this_column)
+                    yield i
                 for i in range(numRows-2, 0, -1):
-                    yield (i, next(columns))       
+                    yield i
 
         for res, _ in zip(cols_iterator(numRows), range(lenS)):
             yield res
 
-    @staticmethod
-    def outputCoords(numRows: int, lenS: int) -> Iterator[tuple[int, int]]:
-        yield (-1, -1)
-
     def convert(self, s: str, numRows: int) -> str:
-        return "~"
+
+        # sort coords
+        letters_array: list[list[str]] = [[] for _ in range(len(s))]
+        
+        for i_row, letter in zip(self.inputCoords(numRows, len(s)), s):
+            letters_array[i_row].append(letter)
+
+        # assemble string
+        return "".join("".join(row) for row in letters_array)
 
 
 class TestConvert(TestCase):
 
     @parameterized.expand([
-        (2, 1, [(0,0)]),
-        (4, 4, [(0,0), (1,0), (2,0), (3,0)]),
-        (5, 7, [(0,0), (1,0), (2,0), (3,0), (4,0), (3,1), (2,2)]),
-        (4, 7, [(0,0), (1,0), (2,0), (3,0), (2,1), (1,2), (0,3)]),
-        (3, 6, [(0,0), (1,0), (2,0), (1,1), (0,2), (1,2)]),
-        (2, 5, [(0,0), (1,0), (0,1), (1,1), (0,2)]),
+        (2, 1, [0]),
+        (4, 4, [0, 1, 2, 3]),
+        (5, 7, [0, 1, 2, 3, 4, 3, 2]),
+        (4, 7, [0, 1, 2, 3, 2, 1, 0]),
+        (3, 6, [0, 1, 2, 1, 0, 1]),
+        (2, 5, [0, 1, 0, 1, 0]),
     ])
     def testInputCoords(self, numRows, lenS, expected_output):
 
         for expected_pair, actual_pair in zip_longest(
                 expected_output,
                 Solution.inputCoords(numRows, lenS)):
-            self.assertEqual(expected_pair, actual_pair)
-
-    @parameterized.expand([
-        (2, 7, [(0,0), (0,3), (0,6), (1,0), (1, 2), (1, 3), (1, 5)]),
-    ])
-    def testOutputCoords(self, numRows, lenS, expected_output):
-        
-        for expected_pair, actual_pair in zip_longest(
-                expected_output,
-                Solution.outputCoords(numRows, lenS)):
             self.assertEqual(expected_pair, actual_pair)
 
     @parameterized.expand([
