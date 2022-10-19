@@ -1,35 +1,29 @@
 import pytest
+import pytest
 
 class Solution:
 
     def myAtoi(self, s: str) -> int:
-        leading_whitespace: bool = True
-        s = s.strip()
-        
-        result_str: str = ""
-        for letter in s:
-            if leading_whitespace:
-                if letter == " ":
-                    continue
-                leading_whitespace = False
 
-                # handling the unique case of the first letter being a sign
-                if letter == "-" or letter == "+":
-                    result_str += letter
-                    continue
+        s = s.strip()
+        if not s:
+            return 0
+        
+        result_str: str = "" 
+        if (s[0] == "-" or s[0] == "+") and len(s) > 1 and s[1].isdigit():
+            result_str = s[0]
+            s = s[1:]
+
+        for letter in s:
             if not letter.isdigit():
                  break
             result_str += letter
-
-        if result_str and not result_str[-1].isdigit():
-            result_str = ""
 
         result_int = int(result_str) if result_str else 0
         result_int = min(result_int, 2**31 - 1)
         result_int = max(result_int, -2**31)
 
         return result_int
-
 
 @pytest.mark.parametrize(
     "test_input,expected", [
