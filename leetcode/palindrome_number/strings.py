@@ -3,7 +3,6 @@ import pytest
 class Solution:
     def isPalindrome(self, x: int) -> bool:
         for lhs, rhs in zip(str(x), str(x)[::-1]):
-            print(lhs, rhs)
             if lhs != rhs:
                 return False
         return True
