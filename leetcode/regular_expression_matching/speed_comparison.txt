@@ -1,0 +1,9 @@
+dynamic_programming_dict_integers - 52ms
+dynamic_programming_dict_string_keys - 95ms
+dynamic_programming_lru_cache - 79ms
+naive_recursion_improved - 1273ms
+
+These timings were based off 1 run, so they might be off
+
+Looks like I can beat the python cache slapped on top of the naive solution, but the extra work and loss of clarity due to moving to integers makes it probably not a *better* solution
+
