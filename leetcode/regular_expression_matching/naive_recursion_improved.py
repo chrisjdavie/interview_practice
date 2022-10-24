@@ -2,28 +2,17 @@ import pytest
 
 class Solution:
 
-    @staticmethod
-    def _matchChar(s_i: str, p_j: str) -> bool:
-        if p_j == ".":
-            return True
-        else:
-            return s_i == p_j
+    def isMatch(self, text: str, pattern: str) -> bool:
 
-    def isMatch(self, s: str, p: str) -> bool:
+        if not pattern:
+            return not text
 
-        if not s and not p:
-            return True
-        if not p:
-            return False          
-        if len(p) > 1 and p[1] == "*":
-            if self.isMatch(s, p[2:]):
-                return True
-            if s and self._matchChar(s[0], p[0]) and self.isMatch(s[1:], p):
-                return True
-            return False
-        if not s:
-            return False 
-        return self._matchChar(s[0], p[0]) and self.isMatch(s[1:], p[1:])
+        first_match: bool = bool(text) and (pattern[0] == text[0] or pattern[0] == ".")
+
+        if len(pattern) > 1 and pattern[1] == "*":
+            return self.isMatch(text, pattern[2:]) or (first_match and self.isMatch(text[1:], pattern))
+
+        return first_match and self.isMatch(text[1:], pattern[1:])
 
 
 @pytest.mark.parametrize(
