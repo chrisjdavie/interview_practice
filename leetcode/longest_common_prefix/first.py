@@ -4,9 +4,9 @@ import pytest
 class Solution:
 
     def longestCommonPrefix(self, strs: list[str]) -> str:
-        longest_common_prefix = ""
+        len_longest_common_prefix = 0
         for chars in zip(*strs):
-            if all(chars[0] == c for c in chars[1:]):
+            if not all(chars[0] == c for c in chars[1:]):
                 longest_common_prefix += chars[0]
             else:
                 break
