@@ -1,5 +1,8 @@
 """
-Made a failing test for excluded numbers
+This works, is fast enough, n**2*log(n) and is the analogy with my 3sum solution.
+
+But there is an n**2 solution that uses some properties of sorted arrays that I hadn't
+considered before. 
 """
 import bisect
 import csv
