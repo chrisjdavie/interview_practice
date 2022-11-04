@@ -4,7 +4,7 @@ Made a failing test for excluded numbers
 import bisect
 import csv
 from collections import Counter
-from itertools import combinations
+from itertools import combinations, combinations_with_replacement
 from pathlib import Path
 from typing import Optional
 
@@ -44,11 +44,15 @@ class Solution:
         nums_sorted = sorted(nums_counter.keys())
 
         closest = 10**5
-        for num_0, num_1 in combinations(nums, 2):
-            
-            excluded_nums = {}
-            if nums_counter[num_0] < 3:
-                excluded_nums = {num_0, num_1}
+        for num_0, num_1 in combinations_with_replacement(nums_sorted, 2):
+            if num_0 == num_1 and nums_counter[num_0] < 2:
+                continue
+
+            excluded_nums = set()
+            if nums_counter[num_0] < 2:
+                excluded_nums.add(num_0)
+            if nums_counter[num_1] < 2:
+                excluded_nums.add(num_1)
 
             num_2 = self._findNearest(
                 nums_sorted, 
