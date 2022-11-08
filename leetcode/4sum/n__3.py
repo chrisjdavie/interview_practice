@@ -1,3 +1,6 @@
+"""
+Using dicts, typical is O(N**3), think there's a worst-case O(N**4) cos there's the linear case when keys clash, but should be very unusual - dict key'd to integers
+"""
 import csv
 from collections import Counter
 from pathlib import Path
