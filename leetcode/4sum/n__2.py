@@ -11,19 +11,22 @@ class Solution:
     def fourSum(self, nums: list[int], target: int) -> list[list[int]]:
     
         count_nums: Counter = Counter(nums)
-        nums = [val for val, val_count in count_nums.items() for _ in range(min(4, val_count))]
+        nums = [val for val, val_count in count_nums.items() for _ in range(min(2, val_count))]
         
         square_store: defaultdict[int, set[tuple[int, int]]] = defaultdict(set)
-        
-        results = set()
+
         for num_0, num_1 in combinations(nums, 2):
             sum_01 = num_0+num_1
-            sum_23 = (target - sum_01)
-            for num_2, num_3 in square_store[sum_23]:
-                cand_comb = tuple(sorted([num_0, num_1, num_2, num_3]))
-                if all(count_nums[val] >= count_comb for val, count_comb in Counter(cand_comb).items()):
-                    results.add(cand_comb)
             square_store[sum_01].add(tuple(sorted((num_0, num_1))))
+
+        results = set()            
+        for sum_01, combs_01 in square_store.items():
+            sum_23 = (target - sum_01)
+            for num_0, num_1 in combs_01:
+                for num_2, num_3 in square_store.get(sum_23,[]):
+                    cand_comb = tuple(sorted([num_0, num_1, num_2, num_3]))
+                    if all(count_nums[val] >= count_comb for val, count_comb in Counter(cand_comb).items()):
+                        results.add(cand_comb)
 
         return [list(comb) for comb in results]
 
