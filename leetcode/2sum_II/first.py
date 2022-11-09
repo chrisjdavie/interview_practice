@@ -18,8 +18,22 @@ import pytest
 class Solution:
 
     def twoSum(self, numbers: list[int], target: int) -> list[int]:
-        return [-1]
+    
+        small_to_large_iter = enumerate(numbers)
+        large_to_small_iter = zip(range(len(numbers)-1,-1,-1), numbers[::-1])
         
+        i_small, num_small = next(small_to_large_iter)
+        i_large, num_large = next(large_to_small_iter)
+        
+        while i_small < i_large:
+            sum_nums = num_small + num_large
+            if target > sum_nums:
+                i_small, num_small = next(small_to_large_iter)
+            elif target < sum_nums:
+                i_large, num_large = next(large_to_small_iter)
+            else:
+                return [i_small+1, i_large+1]
+
         
 @pytest.mark.parametrize(
     "numbers,target,expected",
