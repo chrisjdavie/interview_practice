@@ -3,9 +3,9 @@ Given the head of a linked list, remove the nth node from the end of the list an
 
 https://leetcode.com/problems/remove-nth-node-from-end-of-list/
 
-Two pass solution
+Single pass solution, cos the page asks for that. But turns out, for their timing, single
+pass is slower than double pass, but maybe for long linked lists that isn't the case.
 """
-from itertools import count
 from typing import Optional
 
 import pytest
@@ -19,22 +19,18 @@ class ListNode:
 
 class Solution:
     def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        # count the number of nodes
-        node = head.next
-        for i in count():
-            if not node:
-                break
-            node = node.next
+        node_lhs = head
+        for _ in range(n):
+            node_lhs = node_lhs.next
 
-        # remove the nth node
-        if i-n == -1:
-            head = head.next
+        if node_lhs:
+            node_rhs = head
+            while node_lhs.next:
+                node_rhs = node_rhs.next
+                node_lhs = node_lhs.next
+            node_rhs.next = node_rhs.next.next
         else:
-            node = head
-            for _ in range(i-n):
-                node = node.next
-            node.next = node.next.next
-
+            return head.next
         return head
 
 
@@ -44,6 +40,7 @@ class Solution:
         ([1,2,3,4,5], 2, [1,2,3,5]),
         ([1], 1, []),
         ([1,2], 1, [1]),
+        ([1,2], 2, [2]),
     )
 )
 def test(node_vals, nth_to_remove, expected_node_vals): 
