@@ -3,27 +3,16 @@ from typing import Optional
 import pytest
 
 
-# Definition for singly-linked list.
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
 
+
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        if not list1 and not list2:
-            return None
-        if not list1:
-            return list2
-        if not list2:
-            return list1
-
-        if list1.val < list2.val:
-            head: ListNode = list1
-            list1 = list1.next
-        else:
-            head: ListNode = list2
-            list2 = list2.next
+    
+        head = ListNode()
 
         node: Optional[ListNode] = head
         while list1 and list2:
@@ -40,7 +29,7 @@ class Solution:
         if list2:
             node.next = list2
 
-        return head
+        return head.next
 
 
 def list_to_linked_list(nums: list[int]) -> Optional[ListNode]:
@@ -71,7 +60,6 @@ def test_leetcode(list1, list2, expected_merged_list):
         assert val == actual_node.val
         actual_node = actual_node.next
     assert actual_node is None
-
 
 @pytest.mark.parametrize(
     "list1,list2,expected_merged_list",
