@@ -2,7 +2,9 @@ from typing import Optional
 
 import pytest
 
-
+"""
+Refactoring of first.py based on other people's solutions
+"""
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
