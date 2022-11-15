@@ -19,7 +19,22 @@ class PrioritizedNode:
 
 class Solution:
     def mergeKLists(self, lists: list[Optional[ListNode]]) -> Optional[ListNode]:
-        return ListNode(-99)
+
+        head: ListNode = ListNode()
+        node_queue: PriorityQueue[int, ListNode] = PriorityQueue() # play with typing here
+        for node in lists:
+            if node:
+                node_queue.put(PrioritizedNode(node.val, node))
+
+        node: ListNode = head
+        while not node_queue.empty():
+            next_node: ListNode = node_queue.get().node
+            if next_node.next is not None:
+                node_queue.put(PrioritizedNode(next_node.next.val, next_node.next))
+            node.next = next_node
+            node = node.next
+
+        return head.next
 
 
 @pytest.mark.parametrize(
@@ -27,7 +42,10 @@ class Solution:
     (
         ([[1,4,5],[1,3,4],[2,6]],[1,1,2,3,4,4,5,6]),
         ([],[]),
-        ([[]],[]),
+        ([[],[]],[]),
+        ([[1,2,3]], [1,2,3]),
+        ([[1,3,6],[2,3,4]], [1,2,3,3,4,6]),
+        ([[],[1]], [1])
     )
 )
 def test_leetcode(sorted_lists, expected_list):
