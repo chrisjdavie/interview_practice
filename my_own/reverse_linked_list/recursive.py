@@ -14,17 +14,13 @@ class ListNode:
         self.next = next
 
 
-def reverse(ll: ListNode) -> ListNode:
-
-    prev: ListNode = ll
-    curr: Optional[ListNode] = ll.next
+def reverse(ll: ListNode, ll_m1: Optional[ListNode] = None) -> ListNode:
+    head = ll
+    if ll.next:
+        head = reverse(ll.next, ll)
+    ll.next = ll_m1
+    return head
     
-    while curr:
-        curr.next, curr, prev = prev, curr.next, curr
-
-    ll.next = None
-    return prev
-
 
 @pytest.mark.parametrize(
     "linked_list,reversed",
