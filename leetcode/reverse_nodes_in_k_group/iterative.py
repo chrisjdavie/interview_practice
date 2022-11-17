@@ -18,13 +18,13 @@ class Solution:
         dummy: ListNode = ListNode(-1)
         dummy.next = head
 
-        node_m1: ListNode = dummy
-        node: Optional[ListNode] = dummy.next
+        jump: Optional[ListNode] = dummy
+
         for _ in range(99):
             # check enough nodes for reversal
             broken: bool = False
 
-            check_node: Optional[ListNode] = node
+            check_node: Optional[ListNode] = jump.next
             for _ in range(k):
                 if not check_node:
                     broken = True
@@ -33,20 +33,15 @@ class Solution:
             if broken:
                 break
 
-            node_a: ListNode = node
-            node_b: Optional[ListNode] = node.next
-            node_tmp: Optional[ListNode] = None
-            for _ in range(k-1):
-                node_tmp = node_b.next
-                node_b.next = node_a
-                node_a = node_b
-                node_b = node_tmp
+            # swap node
+            prev: Optional[ListNode] = check_node
+            curr: Optional[ListNode] = jump.next
 
-            node.next = node_tmp
-            node_m1.next = node_a
+            for _ in range(k):
+                curr.next, curr, prev = prev, curr.next, curr
 
-            node_m1 = node
-            node = node_m1.next            
+            # stitch back into the previous k group, move jump point forward
+            jump.next, jump = prev, jump.next
 
         return dummy.next
 
