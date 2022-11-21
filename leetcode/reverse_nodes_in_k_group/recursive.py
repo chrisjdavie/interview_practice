@@ -26,9 +26,9 @@ class ListNode:
 class Solution:
 
     def _shouldReverse(self, node: Optional[ListNode], k: int) -> bool:
-        if k == 1 and node is not None: return True
+        if k == 0: return True
         if node is None: return False
-        
+
         return self._shouldReverse(node.next, k-1)
 
     def _reverse(self, node: ListNode, node_m1: Optional[ListNode], k: int) -> tuple[ListNode, Optional[ListNode]]:
@@ -44,9 +44,8 @@ class Solution:
             # due to reversal, node is now the tail of this k group, and needs to be
             # tied to the next k group
             new_node, node.next = self._reverse(node, None, k)
-            if node.next:
-                # reverse next k group
-                node.next = self.reverseKGroup(node.next, k)
+            # reverse next k group
+            node.next = self.reverseKGroup(node.next, k)
             return new_node
         return node
 
