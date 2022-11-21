@@ -1,9 +1,11 @@
 """
-Recursive solution - this isn't a clear solution, and it made my head hurt thinking about it.
+Recursive solution - this is a much clearer solution. Probably the clearest.
 
-I made a mistake I think; while this works, I combined two things in one - checking you *can* reverse the k group, and the reversal of the k group, using None as a False.
+It's also the slowest and most memory intensive, I'd guess because it keeps having to
+do the work to create many methods for each calc.
 
-This would be a lot clearer if I split those two things up, as I did in the iterative solution
+I'd take clear, slow code over fast code, unless there's a good reason for the faster
+code
 """
 
 from typing import Optional
@@ -23,37 +25,31 @@ class ListNode:
 
 class Solution:
 
-    def _reverseKGroup(self, node: Optional[ListNode], node_m1: Optional[ListNode], k: int, k_count: int) -> tuple[Optional[ListNode], Optional[ListNode]]:
-    
-        next_k_group: Optional[ListNode] = None
-        k_group_head: Optional[ListNode] = None
-        if node is not None:
-            if k_count > 1:
-                k_group_head, next_k_group = self._reverseKGroup(node.next, node, k, k_count - 1)
-                # print(node, k_group_head, next_k_group, k_count, "A")
-            else:
-                k_group_head, next_k_group = self._reverseKGroup(node.next, None, k, k)
-                #print(node, k_group_head, next_k_group, k_count, "B")
-                if next_k_group:
-                    node.next.next = next_k_group
-                if k_group_head:
-                    next_k_group = k_group_head
-                else:
-                    next_k_group = node.next
-                k_group_head = node
-                
-            if k_group_head:
-                node.next = node_m1
-        return k_group_head, next_k_group
+    def _shouldReverse(self, node: Optional[ListNode], k: int) -> bool:
+        if k == 1 and node is not None: return True
+        if node is None: return False
+        
+        return self._shouldReverse(node.next, k-1)
 
-    def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        if k == 1:
-            return head
-        new_head, next_k_group = self._reverseKGroup(head, None, k, k)
-        if new_head:
-            head.next = next_k_group
-            return new_head
-        return head
+    def _reverse(self, node: ListNode, node_m1: Optional[ListNode], k: int) -> tuple[ListNode, Optional[ListNode]]:
+        node_p1, node.next = node.next, node_m1
+        
+        new_head: ListNode = node
+        next_k_group: Optional[ListNode] = node_p1
+        if k > 1:
+            new_head, next_k_group = self._reverse(node_p1, node, k-1)
+        return new_head, next_k_group
+
+    def reverseKGroup(self, node: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if self._shouldReverse(node, k):
+            # due to reversal, node is now the tail of this k group, and needs to be
+            # tied to the next k group
+            new_node, node.next = self._reverse(node, None, k)
+            if node.next:
+                # reverse next k group
+                node.next = self.reverseKGroup(node.next, k)
+            return new_node
+        return node
 
 
 @pytest.mark.parametrize(
