@@ -1,3 +1,11 @@
+"""
+Recursive solution - this isn't a clear solution, and it made my head hurt thinking about it.
+
+I made a mistake I think; while this works, I combined two things in one - checking you *can* reverse the k group, and the reversal of the k group, using None as a False.
+
+This would be a lot clearer if I split those two things up, as I did in the iterative solution
+"""
+
 from typing import Optional
 
 import pytest
@@ -8,6 +16,9 @@ class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
+        
+    def __str__(self):
+        return f"<ListNode({self.val})>"
 
 
 class Solution:
@@ -19,9 +30,18 @@ class Solution:
         if node is not None:
             if k_count > 1:
                 k_group_head, next_k_group = self._reverseKGroup(node.next, node, k, k_count - 1)
+                # print(node, k_group_head, next_k_group, k_count, "A")
             else:
+                k_group_head, next_k_group = self._reverseKGroup(node.next, None, k, k)
+                #print(node, k_group_head, next_k_group, k_count, "B")
+                if next_k_group:
+                    node.next.next = next_k_group
+                if k_group_head:
+                    next_k_group = k_group_head
+                else:
+                    next_k_group = node.next
                 k_group_head = node
-                next_k_group = node.next
+                
             if k_group_head:
                 node.next = node_m1
         return k_group_head, next_k_group
@@ -39,13 +59,14 @@ class Solution:
 @pytest.mark.parametrize(
     "initial_vals,k,expected_vals",
     (
-        # ([1,2,3,4,5],2,[2,1,4,3,5]),
-        # ([1,2,3,4,5],3,[3,2,1,4,5]),
+        ([1,2,3,4,5],2,[2,1,4,3,5]),
+        ([1,2,3,4,5],3,[3,2,1,4,5]),
         ([],2,[]),
         ([0,1],3,[0,1]),
         ([0,1,2],3,[2,1,0]),
         ([0,1,2,3],3,[2,1,0,3]),
         ([0,1,2,3],2,[1,0,3,2]),
+        ([0,1,2,3,4],2,[1,0,3,2,4]),
         ([0,1],1,[0,1]),
     )
 )
