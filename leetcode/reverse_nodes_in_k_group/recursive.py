@@ -33,12 +33,11 @@ class Solution:
 
     def _reverse(self, node: ListNode, node_m1: Optional[ListNode], k: int) -> tuple[ListNode, Optional[ListNode]]:
         node_p1, node.next = node.next, node_m1
-        
-        new_head: ListNode = node
-        next_k_group: Optional[ListNode] = node_p1
+
         if k > 1:
-            new_head, next_k_group = self._reverse(node_p1, node, k-1)
-        return new_head, next_k_group
+            return self._reverse(node_p1, node, k-1)
+        # in this case, node_p1 is the head of the next k group
+        return node, node_p1
 
     def reverseKGroup(self, node: Optional[ListNode], k: int) -> Optional[ListNode]:
         if self._shouldReverse(node, k):
