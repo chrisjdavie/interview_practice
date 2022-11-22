@@ -1,7 +1,8 @@
 """
-I think this is *probably* improved, it's def terser and uses filter and such, but the
-first version is more explicit, probably have to think less hard to understand it. But not
-much
+This is a very simple solution - based on others.
+
+I also expect it to be very slow compared with others, as it alters the shape of nums.
+But honestly, this should have been my first attempt - simple and clear.
 ---------------------------------
 
 Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The relative order of the elements may be changed.
@@ -19,10 +20,9 @@ import pytest
 
 class Solution:
     def removeElement(self, nums: list[int], val: int) -> int:
-        i = -1
-        for i, n in enumerate(filter(lambda x: x != val, nums)):
-            nums[i] = n
-        return i + 1
+        while val in nums:
+        	nums.remove(val)
+        return len(nums)
 
 @pytest.mark.parametrize(
     "input_nums,val_remove,expected_nums",
