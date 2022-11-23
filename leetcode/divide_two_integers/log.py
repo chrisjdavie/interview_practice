@@ -1,4 +1,12 @@
 """
+Improved based on others solutions - rather than overshooting, and then taking values away,
+I had this detect is was about to overshoot and stop, and start climbing again from the
+smallest increment.
+
+It's a lot tidier to program, and probably easier to understand.
+
+----------------------
+
 Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
 
 The integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.
@@ -18,37 +26,19 @@ class Solution:
         dividend, divisor = abs(dividend), abs(divisor)
 
         running_total: int = 0
-        count_total: int = 0 
+        count_total: int = 0
 
-        while (running_total < dividend) or (running_total > (dividend + divisor)):
+        while (running_total < dividend):
 
-            running_total -= divisor
-            count_total -= 1
+            climber, climber_count = divisor, 1
+            
+            while (running_total + climber + climber) < dividend:
 
-            climber: int = divisor
-            count_climber: int = 1
-
-            while (running_total + climber) < dividend:
-
-                climber += climber
-                count_climber += count_climber
+                climber = climber + climber
+                climber_count += climber_count
 
             running_total += climber
-            count_total += count_climber
-
-            running_total += divisor
-            count_total += 1
-
-            faller: int = divisor
-            count_faller: int = 1
-        
-            while (running_total - faller) > (dividend + divisor):
-
-                faller += faller
-                count_faller += count_faller
-
-            running_total -= faller
-            count_total -= count_faller
+            count_total += climber_count
 
         if running_total != dividend:
             count_total -= 1
