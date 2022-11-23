@@ -13,10 +13,10 @@ import pytest
 class Solution:
     def divide(self, dividend: int, divisor: int) -> int:
 
-        negative = False if (dividend > 0 and divisor > 0) or (dividend < 0 and divisor < 0) else True
+        negative: bool = (dividend > 0) is not (divisor > 0)
 
-        if dividend < 0: dividend = -dividend
-        if divisor < 0: divisor = -divisor
+        dividend = abs(dividend)
+        divisor = abs(divisor)
 
         running_total = divisor
         running_count = 1
@@ -32,6 +32,8 @@ class Solution:
             return -running_count
         return running_count
 
+
+@pytest.mark.timeout(10)
 @pytest.mark.parametrize(
     "dividend,divisor,expected_result",
     (
@@ -41,6 +43,7 @@ class Solution:
         (18, 3, 6),
         (7, -3, -2),
         (-7, 3, -2),
+        (-2147483648, -1, 2147483648),
     )
 )
 def test(dividend, divisor, expected_result):
