@@ -23,7 +23,8 @@ class Solution:
     "input_string,words,expected_indicies",
     (
         ("barfoothefoobarman", ["foo","bar"], [0,9]),
-        ("wordgoodgoodgoodbestword", ["word","good","best","word"], [])
+        ("wordgoodgoodgoodbestword", ["word","good","best","word"], []),
+        ("barfoofoobarthefoobarman", ["bar","foo","the"])
     )
 )
 def test_leetcode(input_string, words, expected_indicies):
@@ -34,5 +35,3 @@ Can convert the following into a test using itertools.permutations and then some
 
 For example, if words = ["ab","cd","ef"], then "abcdef", "abefcd", "cdabef", "cdefab", "efabcd", and "efcdab" are all concatenated strings. "acdbef" is not a concatenated substring because it is not the concatenation of any permutation of words.
 """
-
-
