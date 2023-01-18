@@ -6,13 +6,13 @@ import pytest
 
 def _perms(items: list[str], pos: int) -> Iterator[str]:
 
-    if pos + 1 == len(items):
+    if pos == len(items):
         yield "".join(items)
-    else:
-        for i in range(pos,len(items)):
-            items[pos], items[i] = items[i], items[pos]
-            yield from _perms(items, pos + 1)
-            items[pos], items[i] = items[i], items[pos]
+
+    for i in range(pos,len(items)):
+        items[pos], items[i] = items[i], items[pos]
+        yield from _perms(items, pos + 1)
+        items[pos], items[i] = items[i], items[pos]
 
 
 def perms(items: str) -> Iterator[str]:
