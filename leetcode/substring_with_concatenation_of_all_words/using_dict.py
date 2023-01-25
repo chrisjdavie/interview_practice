@@ -11,20 +11,37 @@ https://leetcode.com/problems/substring-with-concatenation-of-all-words/
 -----------------------------------
 A solution for this would be a Trie + a counter, so I'll give that a go when I'm next doing this
 """
+from collections import Counter
+
 import pytest
 
 
 class Solution:
     def findSubstring(self, s: str, words: list[str]) -> list[int]:
-        return [-1]
 
+        len_word = len(words[0])
+        words_count = Counter(words)
+        i_start_substring = []
+
+        for i in range(len(s) - len(words)*len(words[0]) + 1):
+            found_words_count = Counter()
+            for j in range(len(words)):
+                if found_words_count[(this_word := s[(i_this_word := i + j*len_word): i_this_word + len_word])] < words_count[this_word]: # this is not helpful and I wouldn't do this IRL
+                    found_words_count[this_word] += 1
+                else:
+                    break
+            else:
+                i_start_substring.append(i)
+
+        return i_start_substring
 
 @pytest.mark.parametrize(
     "input_string,words,expected_indicies",
     (
         ("barfoothefoobarman", ["foo","bar"], [0,9]),
         ("wordgoodgoodgoodbestword", ["word","good","best","word"], []),
-        ("barfoofoobarthefoobarman", ["bar","foo","the"])
+        ("barfoofoobarthefoobarman", ["bar","foo","the"], [6,9,12]),
+        ("wordgoodgoodgoodbestword", ["word","good","best","good"], [8])
     )
 )
 def test_leetcode(input_string, words, expected_indicies):
