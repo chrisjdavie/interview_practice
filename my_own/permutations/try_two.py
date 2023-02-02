@@ -1,5 +1,4 @@
 from typing import Iterator
-from itertools import zip_longest
 
 import pytest
 
