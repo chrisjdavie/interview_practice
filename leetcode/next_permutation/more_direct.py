@@ -15,16 +15,12 @@ class Solution:
                 break
 
         if i_to_inc != -1:
-
             # find the number to swap with
             num_to_inc: int = nums[i_to_inc]
-            i_swap: int = i_to_inc + 1
-            num_swap: int = nums[i_swap]
-
-            for i, n in enumerate(nums[i_to_inc + 1:]):
-                if n <= num_swap and n > num_to_inc:
-                    num_swap = n
-                    i_swap = i_to_inc + 1 + i
+            for i, n in enumerate(nums[::-1]):
+                if n > num_to_inc:
+                    i_swap: int = len(nums) - i - 1
+                    break
 
             nums[i_to_inc], nums[i_swap] = nums[i_swap], nums[i_to_inc]
 
