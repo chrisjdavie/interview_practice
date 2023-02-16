@@ -3,29 +3,24 @@ import pytest
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
 
-        braces_stack: list[tuple[str, int]] = []
-        complete_braces: list[tuple[int, int]] = []
+        length: int = 0
+        braces_stack: list[tuple[str, int]] = [-1]
+        # set to -1 as start of potentially valid parentheses
 
         for i_brace, brace in enumerate(s):
-            if braces_stack and brace == ")":
-                i_open = braces_stack.pop()
-                complete_braces.append((i_open, i_brace))
             if brace == "(":
                 braces_stack.append(i_brace)
-
-        length: int = 0
-        if complete_braces:
-            i_open_prev, i_close_prev = complete_braces.pop()
-            length = max((length, i_close_prev - i_open_prev + 1))
-            for i_open, i_close in complete_braces[::-1]:
-                if i_open_prev < i_open and i_close_prev > i_close: # encompass prev
-                    pass
-                elif i_close + 1 == i_open_prev: # adjacent to prev
-                    i_open_prev = i_open
-                else: # separate to prev
-                    i_open_prev = i_open
-                    i_close_prev = i_close
-                length = max((length, i_close_prev - i_open_prev + 1))
+            else:
+                braces_stack.pop()
+                if not braces_stack:
+                    # reset on unclosed open
+                    braces_stack.append(i_brace)
+                else:
+                    # closed parentheses, one of 
+                    # - one before last open brace
+                    # - unpaired open brace
+                    # - start
+                    length = max((length, i_brace - braces_stack[-1]))
 
         return length
 
