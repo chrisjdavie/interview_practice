@@ -7,11 +7,11 @@ class Solution:
         complete_braces: list[tuple[int, int]] = []
 
         for i_brace, brace in enumerate(s):
-            if braces_stack and braces_stack[-1][1] == "(" and brace == ")":
-                i_open, _ = braces_stack.pop()
+            if braces_stack and brace == ")":
+                i_open = braces_stack.pop()
                 complete_braces.append((i_open, i_brace))
-            else:
-                braces_stack.append((i_brace, brace))
+            if brace == "(":
+                braces_stack.append(i_brace)
 
         length: int = 0
         if complete_braces:
