@@ -19,10 +19,10 @@ class Solution:
         return count_open == count_close
 
     def longestValidParentheses(self, s: str) -> int:
-        
+
         max_len: int = 0
         for i in range(len(s)):
-            for j in range(i + 1, len(s) + 1):
+            for j in range(i + 2, len(s) + 1, 2):
                 if self._isValid(s, i, j):
                     max_len = max((j - i, max_len))
         return max_len
