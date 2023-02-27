@@ -19,12 +19,28 @@ class Solution:
         for brace in s:
             if brace == "(":
                 count_nested_open += 1
+                count_seq_open += 1
+
+                if count_nested_close > 0:
+                    count_nested_open = 0
+                    count_nested_close = 0
+
             if brace == ")":
                 count_nested_close += 1
+                count_seq_close += 1
+            print()
+            print(count_nested_close, count_nested_open)
             if count_nested_close > count_nested_open:
                 count_nested_open = 0
                 count_nested_close = 0
+                count_seq_open = 0
+                count_seq_close = 0
+
+            print(count_seq_close)
             max_len = max((2*count_nested_close, max_len))
+            if count_seq_open >= count_seq_close:
+                max_len = max((2*count_seq_close, max_len))
+
             if count_nested_open == count_nested_close:
                 count_nested_open = 0
                 count_nested_close = 0                
@@ -38,12 +54,15 @@ class Solution:
         ("", 0),
         ("()", 2),
         ("(", 0),
+        (")", 0),
         (")()", 2),
         ("())(())", 4),
         ("())", 2),
         ("((())", 4),
         ("()((())", 4),
         ("()()", 4),
+        ("(()()", 4),
+        ("(()(((()", 2)
     )    
 )
 def test_longest_valid_parentheses(braces, length_valid):

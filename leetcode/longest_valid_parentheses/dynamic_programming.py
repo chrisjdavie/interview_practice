@@ -12,9 +12,6 @@ class Solution:
         prev_lengths: list[int] = [0]*len(s)
 
         for i_close, brace in enumerate(s):
-            print()
-            print(i_close)
-            print(prev_lengths)
             if brace == ")":
                 # calc i_open
                 # nested braces "((()))"
