@@ -1,45 +1,43 @@
 import pytest
 
+
 class Solution:
 
-    def _isValid(self, s: str, i_lhs: int, i_rhs: int) -> bool:
+    def _isValid(self, s: str, i_start: int, i_end: int) -> bool:
 
         count_open: int = 0
         count_close: int = 0
 
-        for brace in s[i_lhs:i_rhs]:
+        for brace in s[i_start:i_end]:
             if brace == "(":
                 count_open += 1
             if brace == ")":
                 count_close += 1
-            # more closing braces than opening means this string isn't valid
-            if count_close > count_open:
-                break
-
         return count_open == count_close
 
     def longestValidParentheses(self, s: str) -> int:
 
         max_len: int = 0
-        for i in range(len(s)):
-            for j in range(i + 2, len(s) + 1, 2):
+        for i in range(0, len(s)):
+            for j in range(i+1, len(s) + 1):
+                print()
+                print(i, j, self._isValid(s, i, j), j-i)
                 if self._isValid(s, i, j):
-                    max_len = max((j - i, max_len))
+                    max_len = max([max_len, j-i])
+                    print(max_len, j-i)
         return max_len
 
 
 @pytest.mark.parametrize(
-    "braces,length_valid",
-    (
+    "string,expected_length",
+    [
         ("", 0),
         ("()", 2),
         ("(", 0),
-        (")()", 2),
+        ("(())", 4),
         ("())", 2),
-        (")()(", 2),
-        ("(()))()", 4)
-    )
+        ("(()", 2),
+    ]
 )
-def test_longest_valid_parentheses(braces, length_valid):
-
-    assert Solution().longestValidParentheses(braces) == length_valid
+def test(string, expected_length):
+    assert Solution().longestValidParentheses(string) == expected_length
