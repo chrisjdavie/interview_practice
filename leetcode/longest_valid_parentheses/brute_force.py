@@ -13,18 +13,17 @@ class Solution:
                 count_open += 1
             if brace == ")":
                 count_close += 1
+            if count_close > count_open:
+                return False
         return count_open == count_close
 
     def longestValidParentheses(self, s: str) -> int:
 
         max_len: int = 0
         for i in range(0, len(s)):
-            for j in range(i+1, len(s) + 1):
-                print()
-                print(i, j, self._isValid(s, i, j), j-i)
+            for j in range(i + 2, len(s) + 1, 2):
                 if self._isValid(s, i, j):
                     max_len = max([max_len, j-i])
-                    print(max_len, j-i)
         return max_len
 
 
@@ -37,6 +36,7 @@ class Solution:
         ("(())", 4),
         ("())", 2),
         ("(()", 2),
+        (")()(", 2),
     ]
 )
 def test(string, expected_length):
