@@ -163,3 +163,37 @@ Also, negative `REGEXP` , which I'd forgotten how to do
 https://www.hackerrank.com/challenges/weather-observation-station-10
 
 > Query the list of CITY names from STATION that do not end with vowels. Your result cannot contain duplicates.
+
+ `SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP "[^AEIOU]$";`
+
+## Weather Observation Station 11
+
+https://www.hackerrank.com/challenges/weather-observation-station-11
+
+> Query the list of CITY names from STATION that either do not start with vowels or do not end with vowels. Your result cannot contain duplicates.
+
+ `SELECT DISTINCT CITY FROM STATION WHERE CITY NOT REGEXP "^[AEIOU]" OR CITY NOT REGEXP "[AEIOU]$";`
+
+Using regexp or ( `|` )
+
+ `SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP "^[^AEIOU]|[^AEIOU]$";`
+
+## Weather Observation Station 12
+
+https://www.hackerrank.com/challenges/weather-observation-station-12
+
+> Query the list of CITY names from STATION that do not start with vowels and do not end with vowels. Your result cannot contain duplicates.
+
+ `SELECT DISTINCT CITY FROM STATION WHERE CITY NOT REGEXP "^[AEIOU]" AND CITY NOT REGEXP "[AEIOU]$";`
+
+Using just regex (I got this wrong initially as I wanted an AND operator, but stack overflow pointed out that the AND operator is of course implicit in regex, which I of course kinda know but never thought about it like that)
+
+ `SELECT DISTINCT CITY FROM STATION WHERE CITY REGEXP "^[^AEIOU].*[^AEIOU]$";`
+
+## Higher Than 75 Marks
+
+https://www.hackerrank.com/challenges/more-than-75-marks
+
+> Query the Name of any student in STUDENTS who scored higher than 75 Marks. Order your output by the last three characters of each name. If two or more students both have names ending in the same last three characters (i.e.: Bobby, Robby, etc.), secondary sort them by ascending ID.
+
+ `SELECT NAME FROM STUDENTS WHERE MARKS > 75 ORDER BY SUBSTRING(NAME, -3), ID;`
