@@ -7,17 +7,17 @@ class Solution:
 
     def longestValidParentheses(self, s: str) -> int:
 
-        def _one_pass(indicies: Iterable[int], open_brace: str, close_brace: str) -> int:
+        def _one_pass(s_loc: Iterable[str], open_brace: str, close_brace: str) -> int:
 
             count_open: int = 0
             count_close: int = 0
 
             max_len: int = 0
 
-            for i_brace in indicies:
-                if s[i_brace] == open_brace:
+            for brace in s_loc:
+                if brace == open_brace:
                     count_open += 1
-                if s[i_brace] == close_brace:
+                if brace == close_brace:
                     count_close += 1
                 if count_open == count_close:
                     max_len = max((max_len, count_open + count_close))
@@ -27,10 +27,10 @@ class Solution:
 
             return max_len
 
-        # passing the indicies here as doing s[::-1] creates a whole string in memory
+        # ha, learnt about `reversed` and that it calcs on the fly, so doesn't use more memoty than using indicies
         return max(
-            _one_pass(range(len(s)), "(", ")"), # forwards
-            _one_pass(range(len(s)-1, -1, -1), ")", "("), # backwards
+            _one_pass(s, "(", ")"), # forwards
+            _one_pass(reversed(s), ")", "("), # backwards
         )
 
 
