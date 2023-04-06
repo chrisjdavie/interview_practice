@@ -37,6 +37,11 @@ def count_arrives_at_eighty_nine(threshold: int) -> int:
     return sum(1 if arrives_at_one_or_eighty_nine(number) == 89 else 0 for number in range(1, threshold))
 
 
+if __name__ == "__main__":
+    import timeit
+    print(timeit.timeit("count_arrives_at_eighty_nine(10**5)", "from __main__ import count_arrives_at_eighty_nine", number=10))
+
+
 @pytest.mark.parametrize(
     "number,expected_sum_of_squares",
     (
