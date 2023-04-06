@@ -1,6 +1,6 @@
 import pytest
 
-from naive_approach import sum_of_squares, arrives_at_one_or_eighty_nine, count_arrives_at_eighty_nine
+from cache_digit import sum_of_squares, arrives_at_one_or_eighty_nine, count_arrives_at_eighty_nine
 
 
 @pytest.mark.parametrize(
@@ -12,7 +12,7 @@ from naive_approach import sum_of_squares, arrives_at_one_or_eighty_nine, count_
     )
 )
 def test_sum_of_squares(number, expected_sum_of_squares):
-    assert sum_of_squares(number) == expected_sum_of_squares
+    assert sum_of_squares(str(number)) == expected_sum_of_squares
 
 
 @pytest.mark.parametrize(
