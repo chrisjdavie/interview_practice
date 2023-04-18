@@ -1,6 +1,7 @@
 """
 This is a very simple cache, 
 """
+import sys
 from collections import Counter
 from typing import Iterable
 
@@ -21,7 +22,7 @@ def cache_decorator(func):
     cache: dict[cache_key, int] = {
         convert_str_to_cache_key("89"): 89,
         convert_str_to_cache_key("1"): 1
-    } 
+    }
     def wrapped(number: int) -> int:
         return func(number, cache)
 
@@ -53,4 +54,5 @@ def count_arrives_at_eighty_nine(threshold: int) -> int:
     return sum(1 if arrives_at_one_or_eighty_nine(number) == 89 else 0 for number in range(1, threshold))
 
 if __name__ == "__main__":
-    count_arrives_at_eighty_nine(10**7)
+    power = int(sys.argv[1])
+    count_arrives_at_eighty_nine(10**power)

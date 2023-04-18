@@ -1,23 +1,4 @@
-"""
-https://projecteuler.net/problem=92
-
-Had an interview where I didn't solve this super well. There were two sides to it, though I'd been practicing
-leetcode style problems, I hadn't been practicing as if I was solving it in the context of an interview, and
-that threw me.
-
-The other was once I calmed myself down, I didn't really come up with the optimal solution, but as it's not
-one of those ones that has an *obvious* O analysis, it's not super clear what optimisations are actual
-optimisations.
-
-I wouldn't be keen on this sort of question in an interview, seems like people could very easily stumble on it,
-but don't really have insight into the process that led to this decision (or if there was a thoughtful process at all!)
-
-This is addressing the second problem, and partly curiousity on my part - it seems like there could be a lot
-of optimisations, and I don't know that they're all obvious or how the current CPython implementation of things
-occurs. I'll document more as I go
-"""
-import pytest
-
+import sys
 
 def sum_of_squares(number: int) -> int:
     # doing this using strings and not *other* approaches. They're all O(digits of number), but string casting
@@ -35,3 +16,8 @@ def arrives_at_one_or_eighty_nine(number: int) -> int:
 
 def count_arrives_at_eighty_nine(threshold: int) -> int:
     return sum(1 if arrives_at_one_or_eighty_nine(number) == 89 else 0 for number in range(1, threshold))
+
+
+if __name__ == "__main__":
+    power = int(sys.argv[1])
+    count_arrives_at_eighty_nine(10**power)
