@@ -31,7 +31,7 @@ This is addressing the second problem, and partly curiousity on my part - it see
 
 ### Cache behaviours
 
-There's an optimisation for this, a common one, memoization/caching of previously caclulated results and reusing them. But the cached solution, while ~4x faster in the cases examine, was a much lower speed up than I expected looking at the examples.
+There's an optimisation for this, a common one, memoization/caching of previously caclulated results and reusing them. But the cached solution, while ~4x faster in the cases examined, was a much lower speed up than I expected looking at the examples.
 
 It turns out, the increase in number of steps to calculate the result is much smaller as you go to big numbers, so if you just look at small number examples, less than say `162` , you get a misrepresentation of how difficult it will be to calculate larger numbers. I sumarised it in the discussion as; 
 
@@ -91,17 +91,21 @@ This is interesting - the cache was signifcantly faster (not as much as I expect
 
 I investigated this a little, and believe both the caching not being the speed up I expected and the digit caching being slower than the number caching is due to the dynamics of the problem.
 
-Let us take, for example, **10<sup>7</sup>**. The biggest sum of digits will be `10**7 - 1` , or `9999999` (as any other number will have at least one smaller digit). The sum of the square of the digits here is `(9**2)*7` , `567` . So this suggests that the complexity of the naive problem is perhaps of the form `O(N) + A(N)*m*N^(1/2)*N` - `m` being the worst case length of the digits, `N` being the number of numbers, and of course `N = 10**m` , so `m = log10(N)` , so the final complexity is something like
+Let us take, for example, `N=10**7` . The biggest sum of digits will be `10**7 - 1` , or `9999999` (as any other number will have at least one smaller digit). The sum of the square of the digits here is `(9**2)*7` , `567` . So for all numbers above `567` , with a cache, is a two step process - calculate the sum of the digits ( `O(m)` ) and look up the number in the cache ( `O(1)` ).
+
+This suggests that the complexity of the naive problem is in two parts, different for numbers above and below `(9**2)*(m-1)` , `m` being the worst case length of the digits. Taking the leading parts there are `A(N)*m` operations up to the point the cache is filled in such a way it will be reused, and beyond that `O(N*m)` operations (discussed in the paragraph above). Of course `N = 10**m` , so `m = log10(N)` , so the final complexity is something like
 
 ```
-O(N)*log(n) + A(N)*log(n)*N^(1/2)*N
+N*log(N) + A(N)*log(N)
 ```
 
-Where `A(N)` is the number of average steps it takes to get to `89` or `1` for numbers below `567` (more generally `(10**m - 1)^(1/2)` ), which isn't immedately obvious (might be of log form, but I wouldn't be confident. Might also not be analytically calculable).
+Where `A(N)` is the number of average steps it takes to get to `89` or `1` for numbers below `567` (more generally `(9**2)*m` ), which isn't immedately obvious (might be of log form, but I wouldn't be confident. Might also not be analytically calculable).
+
+This of course reduces to a complexity of `O(N)*log(N)` , so long as the form of `A(N)` is not greater than `N` , which seems unlikely from looking at examples.
 
 All this is a very maths way of saying "the sum of the square of digits of big numbers is a much smaller number, so calculating it won't take as long as you'd expect if you only think of small number examples".
 
-So this explains why the caching isn't so much faster than I thought it would be. But it also explains why caching on the digits isn't faster - once you've populated the cache for `567` (in this example), all higher cached values are never used, and so in both cases, above this number, cache storing and access will be linear, and, as stated above, `567` is much smaller than `10**7` .
+So this explains why the caching isn't so much faster than I thought it would be. But it also explains why caching on the digits isn't faster - once you've populated the cache for `567` (in this example), all higher cached values are never used, and so in both cases, above this number, cache storing and access will be log linear, and, as stated above, `567` is much smaller than `10**7` .
 
 (This is limited to `m` > 2, as `(9**2)*2` is `162` greater than `99` , so the cache needs to be populated fully).
 

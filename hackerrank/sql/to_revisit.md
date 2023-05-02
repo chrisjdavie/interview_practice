@@ -19,3 +19,7 @@ Of course, I then got confused about what AND is in regex (it's implicit, which 
 https://www.hackerrank.com/challenges/more-than-75-marks
 
 I got confused about what the final argument to `SUBSTRING` were - I thought it was end index, but it was length, I guess I must have only ever used it from the start of the string
+
+https://www.hackerrank.com/challenges/the-pads
+
+I forgot you had to use `CONCAT` for this
