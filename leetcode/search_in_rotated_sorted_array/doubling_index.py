@@ -1,4 +1,13 @@
 # https://leetcode.com/problems/search-in-rotated-sorted-array/
+"""
+First result, not sure why I did it like this, doubling indicies until I found the right
+one. Looking at other answers, the much more common way was starting from left and right
+and halving.
+
+Also a lot quicker than mine, which is interesting. I *know* this solution isn't one I
+came up with, I've seen it for a different something, but can't recall where. I don't
+know when I'd use one or another, either.
+"""
 import bisect
 
 import pytest
