@@ -1,4 +1,13 @@
 # https://leetcode.com/problems/search-in-rotated-sorted-array/
+"""
+Having done the midpoint halving with both bisect (commented) and
+done it manually, and in both cases it being a lot slower than
+most solutions in leetcode, the answer is to do it in one pass,
+rather than find the pivot - this makes sense, in that there's
+some more complex logic that can handle both cases of finding
+the pivot and searching, but it's much less clear, and this
+works, so I'll stick with it like this.
+"""
 import bisect
 
 import pytest
@@ -23,16 +32,38 @@ class Solution:
                 hi = mid
         return lo + 1
 
+    # def search(self, nums: list[int], target: int) -> int:
+
+    #     pivot = self._find_pivot_index(nums)
+    #     if nums[0] <= target and pivot != 0:
+    #         index = bisect.bisect_left(nums, target, hi=pivot)
+    #     else:
+    #         index = bisect.bisect_left(nums, target, lo=pivot)
+
+    #     if index < len(nums) and nums[index] == target:
+    #         return index
+    #     return -1
+
     def search(self, nums: list[int], target: int) -> int:
 
         pivot = self._find_pivot_index(nums)
-        if nums[0] <= target:
-            index = bisect.bisect_left(nums, target, hi=pivot)
-        else:
-            index = bisect.bisect_left(nums, target, lo=pivot)
 
-        if index < len(nums) and nums[index] == target:
-            return index
+        lo = 0
+        hi = len(nums) - 1
+        if nums[0] <= target and pivot != 0:
+            hi=pivot
+        else:
+            lo=pivot
+
+        while lo <= hi:
+            mid = (lo + hi)//2
+            if nums[mid] == target:
+                return mid
+            if nums[mid] < target:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+
         return -1
 
 
