@@ -15,3 +15,6 @@ https://www.hackerrank.com/challenges/the-pads
 > where [occupation_count] is the number of occurrences of an occupation in OCCUPATIONS and [occupation] is the lowercase occupation name. If more than one Occupation has the same [occupation_count], they should be ordered alphabetically.
 >  
 > Note: There will be at least two entries in the table for each type of occupation.
+
+> SELECT CONCAT(name, "(", SUBSTRING(occupation, 1, 1), ")") FROM occupations ORDER BY name; 
+> SELECT CONCAT("There are a total of ", COUNT(occupation), " ", LOWER(occupation), "s.") FROM occupations GROUP BY occupation ORDER BY COUNT(occupation), occupation; `
