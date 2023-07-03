@@ -1,7 +1,7 @@
 # Questions to revisit later
 
-https://www.hackerrank.com/challenges/the-company/problem?isFullScreen=true
+## Revising Aggregations - Averages
 
-A lot, forgot the format for JOIN : S, didn't think that you could use COUNT in that way, didn't read that there were potentially duplicate entries.
+https://www.hackerrank.com/challenges/revising-aggregations-the-average-function/problem?isFullScreen=true
 
-I did this alright, but forgot the interaction between GROUP BY and JOIN
+Didn't know the function that would give the mean in MySQL
