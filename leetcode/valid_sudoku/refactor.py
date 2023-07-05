@@ -1,4 +1,6 @@
 """
+Refactor, inspired by another solution. The inspiration isn't super strong, 
+
 https://leetcode.com/problems/valid-sudoku/description/
 
 Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
@@ -21,17 +23,28 @@ class Solution:
 
     def isValidSudoku(self, board: list[list[str]]) -> bool:
 
-        vals_in_cols_store = [set() for _ in range(9)]
-
+        vals_in_cols_map = defaultdict(set)
+        vals_in_rows_maps = defaultdict(set)
         vals_in_square_map = defaultdict(set)
 
         for i_row, row in enumerate(board):
-            vals_in_row = set()
-            for j_col, (letter, vals_in_col) in enumerate(zip(row, vals_in_cols_store)):
+            for j_col, letter in enumerate(row):
                 if letter != ".":
+                    """
+                    could do something like
+
+                    if letter in vals_in_rows_maps[i_row]: return False
+                    else: letter in vals_in_rows_maps[i_row].add(letter)
+
+                    For each, but I prefer the below
+                    """
+                    vals_in_row = vals_in_rows_maps[i_row]
+                    vals_in_col = vals_in_cols_map[j_col]
                     vals_in_square = vals_in_square_map[(i_row//3, j_col//3)]
+
                     if letter in vals_in_row or letter in vals_in_col or letter in vals_in_square:
                         return False
+
                     vals_in_row.add(letter)
                     vals_in_col.add(letter)
                     vals_in_square.add(letter)
