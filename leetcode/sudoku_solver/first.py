@@ -1,4 +1,11 @@
 """
+So this is me attempting to systemitise the human way of solving it - it isn't
+bad for that, but I've done it using loops rather than recursion, which is 
+hard to transfer to recursion.
+
+And honestly, as this is a human-centred way of thinking about it, and I really
+need to do it in a computer centred way, and then if I want ompimitize.
+
 https://leetcode.com/problems/sudoku-solver/
 
 Write a program to solve a Sudoku puzzle by filling the empty cells.
