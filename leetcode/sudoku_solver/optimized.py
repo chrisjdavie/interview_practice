@@ -45,7 +45,7 @@ class Solution:
             col_nums: set[str] = col_nums_map[j_col]
             square_nums: set[str] = square_nums_map[(i_row//3,j_col//3)]
 
-            candidates: set[str] = row_nums.intersection(col_nums).intersection(square_nums)
+            candidates: set[str] = row_nums & col_nums & square_nums
             for cand in candidates:
                 row_nums.remove(cand)
                 col_nums.remove(cand)
@@ -53,7 +53,7 @@ class Solution:
                 yield cand
                 row_nums.add(cand)
                 col_nums.add(cand)
-                square_nums.add(cand)                  
+                square_nums.add(cand)             
 
         def solve(i_row: int, j_col: int) -> bool:
             if j_col == edge_length:
