@@ -22,7 +22,42 @@ class Solution:
 
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
 
-        return [[-1]]
+
+        def _solve(i_start_cand: int, _target: int) -> list[list[int]]:
+            results = []
+
+            for i_cand, cand in enumerate(candidates[i_start_cand:]):
+                for i_mult in range(1, _target//cand+1):
+                    mult = i_mult*cand
+                    if mult == _target:
+                        results.append((i_mult)*[cand])
+                    else:
+                        for res in _solve(i_start_cand+i_cand+1, _target - mult):
+                            results.append((i_mult)*[cand] + res)
+
+            return results
+
+        return _solve(0, target)
+
+
+@pytest.mark.parametrize(
+    "candidates,target,expected_combinations",
+    (
+        ([2], 1, []),
+        ([2], 2, [[2],]),
+        ([3], 6, [[3, 3],]),
+        ([2, 3], 6, [[2, 2, 2], [3, 3]]),
+        ([5,], 6, []),
+        ([2, 4], 8, [[2, 2, 2, 2], [2, 2, 4], [4, 4]]),
+    )
+)
+def test_unit(candidates, target, expected_combinations):
+
+    result = Solution().combinationSum(candidates, target)
+
+    for comb in expected_combinations:
+        assert comb in result
+    assert len(result) == len(expected_combinations)
 
 
 @pytest.mark.parametrize(
