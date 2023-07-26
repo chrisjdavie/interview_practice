@@ -12,7 +12,10 @@ The test cases are generated such that the number of unique combinations that su
 ---------------------------
 
 Reading other people's solutions, I didn't realise there was a bottom-up dynamic programming approach, and I'm fairly
-weak at those, so I'll give it a shot
+weak at those, so I'll give it a shot.
+
+Also, I think my tests are more rigourous than leetcode's - if you have extra entries in there, leetcode passes it, if
+others solutions are to believed, whereas my tests require that you only have each "unique" combination only once.
 """
 import pytest
 
@@ -22,15 +25,15 @@ class Solution:
 
     def combinationSum(self, candidates: list[int], target: int) -> list[list[int]]:
 
-        dp: list[list[int]] = [[] for _ in range(target)]
+        dp: list[list[list[int]]] = [[] for _ in range(target)]
 
         for i_t in range(target):
             for cand in candidates:
                 if i_t == cand - 1:
                     dp[i_t].append([cand])
-                if i_t - cand >= 0 and dp[i_t - cand]:
+                if i_t - cand >= 0:
                     for r in dp[i_t - cand]:
-                        if r[-1] <= cand:
+                        if cand >= r[-1]:
                             dp[i_t].append(r + [cand])
 
         return dp[-1]
@@ -40,8 +43,10 @@ class Solution:
     "candidates,target,expected_combinations",
     (
         ([2], 1, []),
+        ([2], 2, [[2]]),
         ([2], 4, [[2, 2]]),
-        ([2, 4], 8, [[2, 2, 2, 2], [2, 2, 4], [4, 4]]),
+        ([2, 3], 3, [[3]]),
+        ([2, 4], 8, [[2, 2, 2, 2], [2, 2, 4], [4, 4]])
     )
 )
 def test_unit(candidates, target, expected_combinations):
