@@ -1,23 +1,11 @@
 # Questions to revisit later
 
-https://www.hackerrank.com/challenges/weather-observation-station-14/problem?isFullScreen=true
-
-Didn't read the question, did it in an overcomplicated way
-
-----------------------
-
-https://www.hackerrank.com/challenges/weather-observation-station-19/problem?isFullScreen=true
-
-Got confused by the question
-
-----------------------
-
-https://www.hackerrank.com/challenges/average-population-of-each-continent/problem?isFullScreen=true
-
-Forgot the function for the mean (again!) and then did the typos
-
-----------------------
-
 https://www.hackerrank.com/challenges/the-report/problem?isFullScreen=true
 
-Didn't read the question, forgot the format for CASE, didn't know how to join ranges, just quite a lot really
+Typos, a lot
+
+-----------------
+
+https://www.hackerrank.com/challenges/full-score/problem?isFullScreen=true
+
+Didn't know about HAVING when using GROUP BY, took me a moment to figure out I shouldn't use subqueries, forgot you need to GROUP BY all the explicit columns in SELECT

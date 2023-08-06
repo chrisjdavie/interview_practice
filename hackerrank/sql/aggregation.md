@@ -1,4 +1,4 @@
-# Aggregation SQL queries, hackerrank 
+# Aggregation SQL queries, hackerrank FROM19
 
 The 3rd subdomain in Hackerrank for SQL, practicing my SQL to get better and improve my chances at job interviews and to be able to go for interviews where strong SQL is needed.
 
