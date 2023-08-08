@@ -71,3 +71,23 @@ JOIN Grades
     ON Students.Marks BETWEEN Grades.Min_Mark AND Grades.Max_Mark
 ORDER BY Grades.Grade DESC, Students.Name;
 ```
+
+## Top Competitors
+
+https://www.hackerrank.com/challenges/full-score/problem?isFullScreen=true
+
+Julia just finished conducting a coding contest, and she needs your help assembling the leaderboard! Write a query to print the respective hacker_id and name of hackers who achieved full scores for more than one challenge. Order your output in descending order by the total number of challenges in which the hacker earned a full score. If more than one hacker received full scores in same number of challenges, then sort them by ascending hacker_id.
+
+```
+SELECT Submissions.hacker_id, Hackers.name
+FROM Challenges
+JOIN Difficulty
+    ON Challenges.difficulty_level = Difficulty.difficulty_level
+JOIN Submissions
+    ON Submissions.challenge_id = Challenges.challenge_id AND Submissions.score = Difficulty.score
+JOIN Hackers
+    ON Submissions.hacker_id = Hackers.hacker_id
+GROUP BY Submissions.hacker_id, Hackers.name
+HAVING COUNT(*) > 1
+ORDER BY COUNT(*) DESC, Submissions.hacker_id;
+```
