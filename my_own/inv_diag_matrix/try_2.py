@@ -1,4 +1,6 @@
 """
+Not smooth, not yet, but better each time
+
 a
 b d
 c e g
