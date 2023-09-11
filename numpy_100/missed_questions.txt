@@ -1,0 +1,26 @@
+4. How to find the memory size of any array
+- didn't know np internal
+5. How to get the documentation of the numpy add function from the command line?
+- forgot python -c, didn't know np internal
+7. Create a vector with values ranging from 10 to 49 
+- did it the Python way, not the np way
+9. Create a 3x3 matrix with values ranging from 0 to 8
+- there was a more elegant way than I did it
+10. Find indices of non-zero elements from [1,2,0,0,4,0]
+- was a more simple way
+11. Create a 3x3 identity matrix
+- forgot the command for the identity matrix
+12. Create a 3x3x3 array with random values
+- did it the complicated way
+13. Create a 10x10 array with random values and find the minimum and maximum values 
+- tried to do it with native Python
+14. Create a random vector of size 30 and find the mean value
+- over complicated it
+15. Create a 2d array with 1 on the border and 0 inside
+Got 2D array indexing wrong, over complicated it
+16. How to add a border (filled with 0's) around an existing array?
+Didn't know numpy did this
+17. What is the result of the following expression? 
+Forgot about code weirdness with certain numbers
+18. Create a 5x5 matrix with values 1,2,3,4 just below the diagonal
+Did this the hard way
